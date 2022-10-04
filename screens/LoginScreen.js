@@ -1,4 +1,5 @@
 import {
+  Alert,
   KeyboardAvoidingView,
   StyleSheet,
   Text,
@@ -6,35 +7,97 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Ionicons } from '@expo/vector-icons';
+import { firebaseConfig } from "../firebase";
+import { initializeApp } from "firebase/app";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
+import { useNavigation } from '@react-navigation/core'
+
+let myApp = initializeApp(firebaseConfig)
+export const auth = getAuth(myApp)
+
+
 
 const LoginScreen = () => {
+  const navigation = useNavigation()  
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleRegister = () =>{
+    createUserWithEmailAndPassword(auth,email, password)
+    .then((userCredentials) => {
+      const user = userCredentials.user
+      console.log(user.email)
+      Alert.alert('Usuario creado con exito!!', user.email)
+    }).catch(err =>{
+      alert(err.message)
+    })
+  }
+
+  const handleLogin = () =>{
+    signInWithEmailAndPassword(auth,email, password)
+    .then((userCredentials) =>{
+      const user = userCredentials.user
+      console.log('Logeado como', user.email)
+      if(!user){
+        alert('XD')
+      }
+      navigation.replace("Pantalla Principal")
+    })
+    .catch(err =>{
+      console.log(err)
+      alert(err.message)
+    })
+  }
+
+  useEffect(() =>{
+    const unsubscribe = onAuthStateChanged(auth, user =>{
+      if(user){
+        navigation.replace("Pantalla Principal")
+      }
+    })
+    return unsubscribe
+  }, [])
+
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <View style={styles.inputContainer}>
-        <Text>Inicio de Sesión</Text>
         <TextInput
           placeholder="Ingresa tu Correo..."
-          style={styles.input}
+          value={email}
+          onChangeText={text => setEmail(text)}
+          style={styles.inputs}
+          keyboardType="email-address"
+          underlineColorAndroid="transparent"
         ></TextInput>
+      </View>
+
+      <View style={styles.inputContainer}>
         <TextInput
           placeholder="Ingresa tu Contraseña..."
-          style={styles.input}
-          secureTextEntry
+          value={password}
+          onChangeText={pass => setPassword(pass)}
+          style={styles.inputs}
+          secureTextEntry={true}
+          underlineColorAndroid="transparent"
         ></TextInput>
       </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => {}} style={styles.button}>
-          <Text style={styles.button}>Iniciar Sesión</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}} style={styles.button}>
-          <Text style={styles.buttonOutline}>Registrarse</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}} style={styles.button}>
-          <Text style={styles.buttonGoogle}>Iniciar Sesión con Google</Text>
-        </TouchableOpacity>
-        
-      </View>
+
+      <TouchableOpacity onPress={handleLogin} style={[styles.buttonContainer, styles.loginButton]}>
+        <Ionicons name="log-in-outline" color="black" size={20} style={styles.icon}/>
+        <Text style={styles.loginText}>Iniciar Sesión</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={handleRegister} style={[styles.buttonContainer, styles.registerButton]}>
+        <Ionicons name="" color="black" size={20} style={styles.icon}/>
+        <Text style={styles.registerText}>Registrarse</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => {}} style={[styles.buttonContainer, styles.googleButton]}>
+        <Ionicons name="logo-google" color="white" size={20} style={styles.icon}/>
+        <Text style={styles.googleText}>Iniciar Sesión con Google</Text>
+      </TouchableOpacity>
     </KeyboardAvoidingView>
   );
 };
@@ -44,24 +107,64 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
   },
   inputContainer: {
-    width: '80%',
+    borderBottomColor: "#F5FCFF",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 25,
+    borderBottomWidth: 1,
+    width: 300,
+    height: 55,
+    marginBottom: 30,
+    flexDirection: "row",
+    alignItems: "center",
   },
-
-  input: {
-
+  icon:{
+    marginRight: 5
+  },
+  inputs: {
+    height: 40,
+    marginLeft: 14,
+    borderBottomColor: "#FFFFFF",
+    flex: 1,
   },
   buttonContainer: {
+    height: 45,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
+    width: 250,
+    borderRadius: 10,
+    backgroundColor: "#"
+  },
+  loginButton: {
+    backgroundColor: "#e9c46a",
+  },
+  registerButton: {
+    backgroundColor: "white",
+    marginTop: 5,
+    borderColor: "#e9c46a",
+    borderWidth: 2,
 
   },
-  button: {},
-  buttonOutline: {},
-  buttonGoogle: {},
-
-
+  registerText: {
+    fontWeight: "700",
+    fontSize: 15,
+  },
+  loginText: {
+    fontWeight: "700",
+    fontSize: 15,
+  },
+  googleButton:{
+    backgroundColor: "#EA4335"
+  },
+  googleText: {
+    fontWeight: "700",
+    fontSize: 15,
+    color: "white"
+  }
 
 });
