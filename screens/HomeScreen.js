@@ -2,6 +2,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { auth } from "./LoginScreen";
 import { useNavigation } from "@react-navigation/core";
+import { Ionicons } from '@expo/vector-icons';
+
 
 const HomeScreen = () => {
 
@@ -17,6 +19,7 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <Text>Email: { auth.currentUser?.email }</Text>
       <TouchableOpacity onPress={handleSignOut} style={[styles.buttonContainer, styles.loginButton]}>
+        <Ionicons name="log-out-outline" color="black" size={20} style={styles.icon}/>
         <Text style={styles.loginText}>Cerrar Sesión</Text>
       </TouchableOpacity>
     </View>
@@ -46,5 +49,8 @@ const styles = StyleSheet.create({
   loginText: {
     fontWeight: "700",
     fontSize: 15,
+  },
+  icon:{
+    marginRight: 5
   },
 });

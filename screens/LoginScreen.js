@@ -14,12 +14,19 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/core'
 
+
+
 let myApp = initializeApp(firebaseConfig)
 export const auth = getAuth(myApp)
 
 
+//WEB: 801765162827-7g7e7nj2l6er0auc26m1kb5pa69spn9h.apps.googleusercontent.com
+//IOS: 801765162827-sqsileqn4nb69k7glcn866d5m7m4ier6.apps.googleusercontent.com
+//ANDROID: 801765162827-v2ntcov1vnt08h395rhtn9isam8nsk0d.apps.googleusercontent.com
+
 
 const LoginScreen = () => {
+
   const navigation = useNavigation()  
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -41,7 +48,7 @@ const LoginScreen = () => {
       const user = userCredentials.user
       console.log('Logeado como', user.email)
       if(!user){
-        alert('XD')
+        alert('Hola')
       }
       navigation.replace("Pantalla Principal")
     })
@@ -90,13 +97,8 @@ const LoginScreen = () => {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={handleRegister} style={[styles.buttonContainer, styles.registerButton]}>
-        <Ionicons name="" color="black" size={20} style={styles.icon}/>
+        <Ionicons name="add-circle-outline" color="black" size={20} style={styles.icon}/>
         <Text style={styles.registerText}>Registrarse</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => {}} style={[styles.buttonContainer, styles.googleButton]}>
-        <Ionicons name="logo-google" color="white" size={20} style={styles.icon}/>
-        <Text style={styles.googleText}>Iniciar Sesión con Google</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
   );
@@ -158,13 +160,5 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 15,
   },
-  googleButton:{
-    backgroundColor: "#EA4335"
-  },
-  googleText: {
-    fontWeight: "700",
-    fontSize: 15,
-    color: "white"
-  }
 
 });
