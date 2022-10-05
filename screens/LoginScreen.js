@@ -19,12 +19,6 @@ import { useNavigation } from '@react-navigation/core'
 let myApp = initializeApp(firebaseConfig)
 export const auth = getAuth(myApp)
 
-
-//WEB: 801765162827-7g7e7nj2l6er0auc26m1kb5pa69spn9h.apps.googleusercontent.com
-//IOS: 801765162827-sqsileqn4nb69k7glcn866d5m7m4ier6.apps.googleusercontent.com
-//ANDROID: 801765162827-v2ntcov1vnt08h395rhtn9isam8nsk0d.apps.googleusercontent.com
-
-
 const LoginScreen = () => {
 
   const navigation = useNavigation()  
@@ -35,7 +29,6 @@ const LoginScreen = () => {
     createUserWithEmailAndPassword(auth,email, password)
     .then((userCredentials) => {
       const user = userCredentials.user
-      console.log(user.email)
       Alert.alert('Usuario creado con exito!!', user.email)
     }).catch(err =>{
       alert(err.message)
