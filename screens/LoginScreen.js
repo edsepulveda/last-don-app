@@ -13,6 +13,7 @@ import { firebaseConfig } from "../firebase";
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/core'
+import { COLORS } from "../constants";
 
 
 
@@ -133,15 +134,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     width: 250,
     borderRadius: 10,
-    backgroundColor: "#"
   },
   loginButton: {
-    backgroundColor: "#e9c46a",
+    backgroundColor: COLORS.lightOrange3,
   },
   registerButton: {
     backgroundColor: "white",
     marginTop: 5,
-    borderColor: "#e9c46a",
+    borderColor: COLORS.lightOrange,
     borderWidth: 2,
 
   },
