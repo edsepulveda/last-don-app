@@ -14,11 +14,13 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/core'
 import { COLORS } from "../constants";
+import { getFirestore } from 'firebase/firestore'
 
 
 
 let myApp = initializeApp(firebaseConfig)
 export const auth = getAuth(myApp)
+export const db = getFirestore(myApp)
 
 const LoginScreen = () => {
 

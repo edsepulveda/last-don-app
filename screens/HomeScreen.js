@@ -17,7 +17,6 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Email: { auth.currentUser?.email }</Text>
       <TouchableOpacity onPress={handleSignOut} style={[styles.buttonContainer, styles.loginButton]}>
         <Ionicons name="log-out-outline" color="black" size={20} style={styles.icon}/>
         <Text style={styles.loginText}>Cerrar Sesión</Text>

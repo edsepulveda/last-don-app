@@ -13,7 +13,6 @@ import utils from "../utlis/Utils";
 import { COLORS, SIZES } from '../constants/index'
 import { Ionicons } from '@expo/vector-icons'
 
-
 const MapScreen = () => {
   const fromLocs = [
     {
@@ -63,6 +62,7 @@ const MapScreen = () => {
             apikey={GOOGLE_API_KEY}
             strokeWidth={5}
             optimizeWaypoints={true}
+            
             strokeColor={COLORS.primary}
             onReady={result => {
               setDuration(Math.ceil(result.duration))
@@ -104,9 +104,9 @@ const MapScreen = () => {
         )}
       </MapView>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <Ionicons name="hourglass-outline" color={COLORS.black} size={30} style={{paddingTop: 15, paddingBottom: 15, paddingLeft: 20}}/>
+        <Ionicons name="hourglass-outline" color={COLORS.primary} size={30} style={{paddingTop: 15, paddingBottom: 15, paddingLeft: 20}}/>
         <View style={{marginLeft: SIZES.padding}}>
-          <Text style={{color: COLORS.darkGray, fontSize: 15}}>Tiempo Esperado de llegada: {duration} Minutos</Text>
+          <Text style={{color: COLORS.darkGray, fontSize: 15, fontWeight: "700"}}>Tiempo Esperado de llegada: {duration} Minutos</Text>
         </View>
       </View>
 

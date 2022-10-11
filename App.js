@@ -6,6 +6,7 @@ import Tabs from './screens/Tabs';
 import { Provider } from 'react-redux'
 import { store } from './store';
 
+
 const Stack = createNativeStackNavigator();
 
 
