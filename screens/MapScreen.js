@@ -16,8 +16,8 @@ import { Ionicons } from '@expo/vector-icons'
 const MapScreen = () => {
   const fromLocs = [
     {
-      latitude: -33.498221,
-      longitude: -70.708192,
+      latitude: -33.496722,
+      longitude: -70.653055,
     },
   ];
 
@@ -32,20 +32,20 @@ const MapScreen = () => {
 
   React.useEffect(() => {
     let initialRegion = {
-      latitude: -33.496689,
-      longitude: -70.653078,
+      latitude: -33.496722,
+      longitude: -70.653055,
       latitudeDelta: 0.02,
       longitudeDelta: 0.02,
-    };
+    }
 
     let destination = {
-      latitude: -33.525883,
-      longitude: -70.771644,
-    };
-    setRegion(initialRegion);
-    setToLoc(destination);
-    setFromLoc(fromLocs[0]);
-  }, []);
+      latitude: -33.563752,
+      longitude: -70.666893
+    }
+    setRegion(initialRegion)
+    setToLoc(destination)
+    setFromLoc(fromLocs[0])
+  }, [])
 
   return (
     <View style={styles.container}>

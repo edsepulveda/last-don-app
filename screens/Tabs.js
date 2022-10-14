@@ -5,6 +5,7 @@ import MapScreen from "./MapScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../constants/index";
 import FormScreen from "./FormScreen";
+import MapScreenV2 from "./MapScreenV2";
 
 const Tab = createBottomTabNavigator();
 
@@ -39,6 +40,17 @@ const Tabs = () => {
         options={{
           tabBarIcon: ({ color = COLORS.primary }) => (
             <Ionicons name="document-text-outline" color={color} size={30} />
+          ),
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.darkGray,
+        }}
+      />
+      <Tab.Screen
+        name="Mapav2"
+        component={MapScreenV2}
+        options={{
+          tabBarIcon: ({ color = COLORS.primary }) => (
+            <Ionicons name="map-outline" color={color} size={30} />
           ),
           tabBarActiveTintColor: COLORS.primary,
           tabBarInactiveTintColor: COLORS.darkGray,

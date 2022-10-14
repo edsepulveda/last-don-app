@@ -2,26 +2,43 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { auth } from "./LoginScreen";
 import { useNavigation } from "@react-navigation/core";
-import { Ionicons } from '@expo/vector-icons';
-
+import { Ionicons } from "@expo/vector-icons";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { GOOGLE_API_KEY } from "../enviorment";
+import { useDispatch } from "react-redux";
+import { setDestination, setOrigin } from "../slices/navSlice";
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
 
-  const navigation = useNavigation()
+  const dispatch = useDispatch()
 
-  const handleSignOut = () =>{
-    auth.signOut().then(() =>{
-      navigation.replace("Inicio de Sesión")
-    }).catch(err => alert(err.message))
-  }
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.replace("Inicio de Sesión");
+      })
+      .catch((err) => alert(err.message));
+  };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={handleSignOut} style={[styles.buttonContainer, styles.loginButton]}>
-        <Ionicons name="log-out-outline" color="black" size={20} style={styles.icon}/>
-        <Text style={styles.loginText}>Cerrar Sesión</Text>
-      </TouchableOpacity>
-    </View>
+    <>
+      <View style={styles.container}>
+        <TouchableOpacity
+          onPress={handleSignOut}
+          style={[styles.buttonContainer, styles.loginButton]}
+        >
+          <Ionicons
+            name="log-out-outline"
+            color="black"
+            size={20}
+            style={styles.icon}
+          />
+          <Text style={styles.loginText}>Cerrar Sesión</Text>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 };
 
@@ -49,7 +66,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 15,
   },
-  icon:{
-    marginRight: 5
+  icon: {
+    marginRight: 5,
   },
 });
