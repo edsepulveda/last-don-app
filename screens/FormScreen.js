@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert
 } from "react-native";
 import React, { useState } from "react";
 import { COLORS } from "../constants";
@@ -27,9 +28,9 @@ const FormScreen = () => {
   };
 
   const saveNewAdvise = async () => {
-    if (state.name === "") {
-      alert("Please Provide a Name");
-    } else {
+    if (state.name == '' || state.bags == '' || state.email == '' || state.address == '' || state.phone == '') {
+      Alert.alert(`Todos los campos son requeridos`);
+    } else{
       const docRef = await addDoc(collection(db, "avisos"), {
         name: state.name,
         email: state.email,
@@ -40,7 +41,9 @@ const FormScreen = () => {
       alert("Guardado");
       console.log("Documento guardado", docRef.id);
     }
+
   };
+  
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>

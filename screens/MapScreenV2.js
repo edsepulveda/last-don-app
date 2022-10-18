@@ -68,6 +68,13 @@ export default function MapScreenV2() {
     
   }
 
+  const onDeleteRoute = () =>{
+    setOrigin('')
+    setDestination('')
+    setShowDirections(false)
+    setDuration('')
+    setDistance('')
+  }
 
   return (
     <>
@@ -77,8 +84,8 @@ export default function MapScreenV2() {
           provider={PROVIDER_GOOGLE}
           style={styles.map}
           initialRegion={{
-            latitude: -33.4727092,
-            longitude: -70.7699164,
+            latitude: -33.4967154,
+            longitude: -70.6531385,
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           }}
@@ -111,7 +118,12 @@ export default function MapScreenV2() {
             setOrigin(position);
             moveTo(position);
             console.log(origin);
+
           }}
+          nearbyPlacesAPI="GooglePlacesSearch"
+          debounce={400}
+          placeholder="¿Donde se encuentra?"
+          enablePoweredByContainer={false}          
           query={{
             key: GOOGLE_API_KEY,
             language: "es",
@@ -130,14 +142,23 @@ export default function MapScreenV2() {
             moveTo(position);
             console.log(destination);
           }}
+          debounce={400}
+          nearbyPlacesAPI="GooglePlacesSearch"
+          placeholder="¿Hacia donde quiere llegar?"
           query={{
             key: GOOGLE_API_KEY,
             language: "es",
           }}
         />
-        <TouchableOpacity style={styles.button} onPress={traceRoute}>
+        {origin && destination ? (
+          <>
+          <TouchableOpacity style={styles.button} onPress={traceRoute}>
           <Text style={styles.buttonText}>Marcar Ruta</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
+          </>
+
+        ): null}
+
       </View>
       
       {duration && distance ? <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.white}}>
@@ -145,6 +166,9 @@ export default function MapScreenV2() {
         <View style={{marginLeft: SIZES.padding}}>
           <Text style={{color: COLORS.darkGray, fontSize: 15, fontWeight: "700"}}>Distancia: {distance.toFixed(2)} Kilometros</Text>
           <Text style={{color: COLORS.darkGray, fontSize: 15, fontWeight: "700"}}>Tiempo Esperado de llegada: {Math.ceil(duration)} Minutos</Text>
+          <TouchableOpacity style={styles.button} onPress={onDeleteRoute}>
+            <Text style={styles.buttonText}>Eliminar Ruta</Text>
+          </TouchableOpacity>
         </View>
       </View>: null}
 
