@@ -41,7 +41,6 @@ const FormScreen = () => {
       alert("Guardado");
       console.log("Documento guardado", docRef.id);
     }
-
   };
   
 

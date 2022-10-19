@@ -3,15 +3,9 @@ import React from "react";
 import { auth } from "./LoginScreen";
 import { useNavigation } from "@react-navigation/core";
 import { Ionicons } from "@expo/vector-icons";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { GOOGLE_API_KEY } from "../enviorment";
-import { useDispatch } from "react-redux";
-import { setDestination, setOrigin } from "../slices/navSlice";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-
-  const dispatch = useDispatch()
 
   const handleSignOut = () => {
     auth

@@ -1,6 +1,9 @@
 import {
   Alert,
+  Dimensions,
+  ImageBackground,
   KeyboardAvoidingView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -8,124 +11,185 @@ import {
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 import { firebaseConfig } from "../firebase";
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
-import { useNavigation } from '@react-navigation/core'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { useNavigation } from "@react-navigation/core";
 import { COLORS } from "../constants";
-import { getFirestore } from 'firebase/firestore'
+import { getFirestore } from "firebase/firestore";
+import { StatusBar } from "expo-status-bar";
 
-
-
-let myApp = initializeApp(firebaseConfig)
-export const auth = getAuth(myApp)
-export const db = getFirestore(myApp)
+let myApp = initializeApp(firebaseConfig);
+export const auth = getAuth(myApp);
+export const db = getFirestore(myApp);
 
 const LoginScreen = () => {
+  const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const navigation = useNavigation()  
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const handleRegister = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        Alert.alert("Usuario creado con exito!!", user.email);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
 
-  const handleRegister = () =>{
-    createUserWithEmailAndPassword(auth,email, password)
-    .then((userCredentials) => {
-      const user = userCredentials.user
-      Alert.alert('Usuario creado con exito!!', user.email)
-    }).catch(err =>{
-      alert(err.message)
-    })
-  }
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("Logeado como", user.email);
+        if (!user) {
+          alert("Hola");
+        }
+        navigation.replace("Pantalla Principal");
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err.message);
+      });
+  };
 
-  const handleLogin = () =>{
-    signInWithEmailAndPassword(auth,email, password)
-    .then((userCredentials) =>{
-      const user = userCredentials.user
-      console.log('Logeado como', user.email)
-      if(!user){
-        alert('Hola')
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigation.replace("Pantalla Principal");
       }
-      navigation.replace("Pantalla Principal")
-    })
-    .catch(err =>{
-      console.log(err)
-      alert(err.message)
-    })
-  }
-
-  useEffect(() =>{
-    const unsubscribe = onAuthStateChanged(auth, user =>{
-      if(user){
-        navigation.replace("Pantalla Principal")
-      }
-    })
-    return unsubscribe
-  }, [])
+    });
+    return unsubscribe;
+  }, []);
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Ingresa tu Correo..."
-          value={email}
-          onChangeText={text => setEmail(text)}
-          style={styles.inputs}
-          keyboardType="email-address"
-          underlineColorAndroid="transparent"
-        ></TextInput>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: COLORS.white }}
+      showsVerticalScrollIndicator={false}
+    >
+      <StatusBar style="light"/>
+      <ImageBackground
+        source={require("../assets/background.jpg")}
+        style={{ height: Dimensions.get("window").height / 2 }}
+      >
+        <View style={styles.brand}>
+          <Ionicons
+            name="leaf-outline"
+            style={{ color: COLORS.primary, fontSize: 100 }}
+          />
+          <Text style={styles.brandText}>Ideas Nuevas</Text>
+        </View>
+      </ImageBackground>
+      <View style={styles.bottomView}>
+        <View style={{ padding: 40 }}>
+          <Text
+            style={{
+              color: COLORS.darkBlue,
+              fontSize: 34,
+              textAlign: "center",
+            }}
+          >
+            Bienvenido
+          </Text>
+
+          <View style={[styles.inputContainer]}>
+            <TextInput
+              placeholder="Ingresa tu Correo..."
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+              style={styles.inputs}
+              keyboardType="email-address"
+            ></TextInput>
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Ingresa tu Contraseña..."
+              value={password}
+              onChangeText={(pass) => setPassword(pass)}
+              style={styles.inputs}
+              secureTextEntry={true}
+            ></TextInput>
+          </View>
+          <View style={{marginTop: 40}}>
+
+          
+          <TouchableOpacity
+            onPress={handleLogin}
+            style={[styles.buttonContainer, styles.loginButton]}
+          >
+            <Ionicons
+              name="log-in-outline"
+              color="white"
+              size={20}
+              style={styles.icon}
+            />
+            <Text style={styles.loginText}>Iniciar Sesión</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={handleRegister}
+            style={[styles.buttonContainer, styles.registerButton]}
+          >
+            <Ionicons
+              name="add-circle-outline"
+              color="black"
+              size={20}
+              style={styles.icon}
+            />
+            <Text style={styles.registerText}>Registrarse</Text>
+          </TouchableOpacity>
+          <Text style={{textAlign:"center", color: COLORS.blue}}>¿Olvidaste tu contraseña?</Text>
+          </View>
+        </View>
       </View>
-
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Ingresa tu Contraseña..."
-          value={password}
-          onChangeText={pass => setPassword(pass)}
-          style={styles.inputs}
-          secureTextEntry={true}
-          underlineColorAndroid="transparent"
-        ></TextInput>
-      </View>
-
-      <TouchableOpacity onPress={handleLogin} style={[styles.buttonContainer, styles.loginButton]}>
-        <Ionicons name="log-in-outline" color="black" size={20} style={styles.icon}/>
-        <Text style={styles.loginText}>Iniciar Sesión</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={handleRegister} style={[styles.buttonContainer, styles.registerButton]}>
-        <Ionicons name="add-circle-outline" color="black" size={20} style={styles.icon}/>
-        <Text style={styles.registerText}>Registrarse</Text>
-      </TouchableOpacity>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  container: {
+  brand: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-  inputContainer: {
-    borderBottomColor: "#F5FCFF",
-    backgroundColor: "#FFFFFF",
-    borderRadius: 25,
-    borderBottomWidth: 1,
-    width: 300,
-    height: 55,
-    marginBottom: 30,
-    flexDirection: "row",
-    alignItems: "center",
+  brandText: {
+    color: COLORS.primary,
+    fontSize: 40,
+    fontWeight: "700",
+    textTransform: "uppercase",
   },
-  icon:{
-    marginRight: 5
+  bottomView: {
+    flex: 1.5,
+    backgroundColor: COLORS.white,
+    bottom: 50,
+    borderTopStartRadius: 60,
+    borderTopEndRadius: 60,
+  },
+  inputContainer: {
+    borderBottomColor: COLORS.primary,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    borderBottomWidth: 3,
+    borderColor: COLORS.primary,
+    marginTop: 50,
+  },
+  icon: {
+    marginRight: 5,
   },
   inputs: {
     height: 40,
     marginLeft: 14,
-    borderBottomColor: "#FFFFFF",
+    borderBottomColor: COLORS.primary,
     flex: 1,
   },
   buttonContainer: {
@@ -133,19 +197,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,
-    width: 250,
+    marginBottom: 17,
+    width: 330,
     borderRadius: 10,
+
   },
   loginButton: {
-    backgroundColor: COLORS.lightOrange3,
+    backgroundColor: COLORS.primary,
   },
   registerButton: {
     backgroundColor: "white",
     marginTop: 5,
-    borderColor: COLORS.lightOrange,
+    borderColor: COLORS.primary,
     borderWidth: 2,
-
   },
   registerText: {
     fontWeight: "700",
@@ -154,6 +218,6 @@ const styles = StyleSheet.create({
   loginText: {
     fontWeight: "700",
     fontSize: 15,
+    color: "white"
   },
-
 });
