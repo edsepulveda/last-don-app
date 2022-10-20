@@ -16,6 +16,7 @@ const HomeScreen = () => {
       .catch((err) => alert(err.message));
   };
 
+  
   return (
     <>
       <View style={styles.container}>
