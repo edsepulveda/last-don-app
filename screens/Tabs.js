@@ -13,11 +13,11 @@ const Tabs = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
-        name="Principal"
-        component={HomeScreen}
+        name="Formulario"
+        component={FormScreen}
         options={{
           tabBarIcon: ({ color = COLORS.primary }) => (
-            <Ionicons name="home-outline" color={color} size={30} />
+            <Ionicons name="document-text-outline" color={color} size={30} />
           ),
           tabBarActiveTintColor: COLORS.primary,
           tabBarInactiveTintColor: COLORS.darkGray,
@@ -35,22 +35,22 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="Formulario"
-        component={FormScreen}
+        name="Mapav2"
+        component={MapScreenV2}
         options={{
           tabBarIcon: ({ color = COLORS.primary }) => (
-            <Ionicons name="document-text-outline" color={color} size={30} />
+            <Ionicons name="map-outline" color={color} size={30} />
           ),
           tabBarActiveTintColor: COLORS.primary,
           tabBarInactiveTintColor: COLORS.darkGray,
         }}
       />
       <Tab.Screen
-        name="Mapav2"
-        component={MapScreenV2}
+        name="Opciones"
+        component={HomeScreen}
         options={{
           tabBarIcon: ({ color = COLORS.primary }) => (
-            <Ionicons name="map-outline" color={color} size={30} />
+            <Ionicons name="settings-outline" color={color} size={30} />
           ),
           tabBarActiveTintColor: COLORS.primary,
           tabBarInactiveTintColor: COLORS.darkGray,

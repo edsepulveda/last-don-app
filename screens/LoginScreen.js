@@ -2,7 +2,6 @@ import {
   Alert,
   Dimensions,
   ImageBackground,
-  KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
   Text,
@@ -51,7 +50,7 @@ const LoginScreen = () => {
         const user = userCredentials.user;
         console.log("Logeado como", user.email);
         if (!user) {
-          alert("Hola");
+          Alert.alert('Error:', 'Usuario no encontrado')
         }
         navigation.replace("Pantalla Principal");
       })
@@ -60,6 +59,10 @@ const LoginScreen = () => {
         alert(err.message);
       });
   };
+
+  const handleResetPassword = () =>{
+    navigation.navigate("Recuperar Contraseña")
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -146,7 +149,8 @@ const LoginScreen = () => {
             />
             <Text style={styles.registerText}>Registrarse</Text>
           </TouchableOpacity>
-          <Text style={{textAlign:"center", color: COLORS.blue}}>¿Olvidaste tu contraseña?</Text>
+          
+          <Text onPress={handleResetPassword} style={{textAlign:"center", color: COLORS.blue}}>¿Olvidaste tu contraseña?</Text>
           </View>
         </View>
       </View>
