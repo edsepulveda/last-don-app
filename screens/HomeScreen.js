@@ -3,9 +3,11 @@ import React from "react";
 import { auth } from "./LoginScreen";
 import { useNavigation } from "@react-navigation/core";
 import { Ionicons } from "@expo/vector-icons";
+import { COLORS } from "../constants";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const user = auth.currentUser
 
   const handleSignOut = () => {
     auth
@@ -20,6 +22,7 @@ const HomeScreen = () => {
   return (
     <>
       <View style={styles.container}>
+        <Text>Se encuentra logeado con el correo: {user.email}</Text>
         <TouchableOpacity
           onPress={handleSignOut}
           style={[styles.buttonContainer, styles.loginButton]}
@@ -54,7 +57,7 @@ const styles = StyleSheet.create({
     width: 250,
     borderRadius: 10,
     backgroundColor: "white",
-    borderColor: "#e9c46a",
+    borderColor: COLORS.primary,
     borderWidth: 2,
   },
   loginText: {

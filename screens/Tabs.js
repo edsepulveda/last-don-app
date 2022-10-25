@@ -24,18 +24,18 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="Mapa"
+        name="Puntos de Acoplo"
         component={MapScreen}
         options={{
           tabBarIcon: ({ color = COLORS.primary }) => (
-            <Ionicons name="map-outline" color={color} size={30} />
+            <Ionicons name="navigate-outline" color={color} size={30} />
           ),
           tabBarActiveTintColor: COLORS.primary,
           tabBarInactiveTintColor: COLORS.darkGray,
         }}
       />
       <Tab.Screen
-        name="Mapav2"
+        name="Mapa"
         component={MapScreenV2}
         options={{
           tabBarIcon: ({ color = COLORS.primary }) => (
