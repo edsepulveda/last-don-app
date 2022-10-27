@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../constants/index";
 import FormScreen from "./FormScreen";
 import MapScreenV2 from "./MapScreenV2";
+import AdvisesListScreen from "./AdvisesListScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -40,6 +41,17 @@ const Tabs = () => {
         options={{
           tabBarIcon: ({ color = COLORS.primary }) => (
             <Ionicons name="map-outline" color={color} size={30} />
+          ),
+          tabBarActiveTintColor: COLORS.primary,
+          tabBarInactiveTintColor: COLORS.darkGray,
+        }}
+      />
+      <Tab.Screen
+        name="Listado de Avisos"
+        component={AdvisesListScreen}
+        options={{
+          tabBarIcon: ({ color = COLORS.primary }) => (
+            <Ionicons name="list-outline" color={color} size={30} />
           ),
           tabBarActiveTintColor: COLORS.primary,
           tabBarInactiveTintColor: COLORS.darkGray,

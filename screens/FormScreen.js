@@ -101,7 +101,7 @@ const FormScreen = () => {
               <TextInput
                 onChangeText={(value) => handleChangeText("bags", value)}
                 keyboardType="numeric"
-                maxLength={2}
+                maxLength={1}
                 style={styles.textInputStyle}
                 autoCorrect={false}
                 placeholder="Cantidad de Bolsas"

@@ -32,6 +32,7 @@ const MapScreen = () => {
         initialRegion={initialRegion}
         mapPadding={edgePadding}
         userInterfaceStyle="dark"
+        loadingEnabled={true}
         
       >
         <Marker coordinate={initialRegion}/>
