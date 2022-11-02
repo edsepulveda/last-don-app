@@ -13,6 +13,7 @@ import { COLORS, SIZES } from "../constants";
 import Constants from "expo-constants";
 import MapViewDirections from "react-native-maps-directions";
 import { Ionicons } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
 
 //MAPVIEW
 const { width, height } = Dimensions.get("window");
@@ -76,6 +77,7 @@ export default function MapScreenV2() {
   return (
     <>
       <View style={styles.container}>
+        <StatusBar/>
         <MapView
           ref={mapRef}
           provider={PROVIDER_GOOGLE}
@@ -86,8 +88,8 @@ export default function MapScreenV2() {
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           }}
-          showsTraffic={true}
           loadingEnabled={true}
+          loadingIndicatorColor={COLORS.primary}
         >
           {origin && <Marker coordinate={origin} title="Origen" pinColor={COLORS.primary}/>}
           {destination && <Marker coordinate={destination} title="Destino" description="Fin" pinColor={COLORS.green}/>}

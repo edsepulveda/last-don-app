@@ -62,15 +62,15 @@ const AdvisesListScreen = () => {
               
             }}
           >
-            <Image source={{uri: IMG}} style={{width: 70, height: 70, borderRadius: 80, marginRight: 20, top: 20,}}/>
+            <Image source={{uri: IMG}} style={{width: 70, height: 70, borderRadius: 80, marginRight: 20}}/>
             <View>
-              <Text style={{ fontSize: 22, fontWeight: "700" }}>
+              <Text style={{ fontSize: 20, fontWeight: "700" }}>
                 Nombre: {item.name}
               </Text>
-              <Text style={{ fontSize: 18, opacity: 0.7, marginTop: 3, }}>Direccion: {item.address}</Text>
+              <Text style={{ fontSize: 14, opacity: 0.7, marginTop: 3, }}>Direccion: {item.address}</Text>
               <Text
                 style={{
-                  fontSize: 16,
+                  fontSize: 14,
                   opacity: 0.8,
                   color: COLORS.primary,
                   fontWeight: "700",
@@ -79,9 +79,6 @@ const AdvisesListScreen = () => {
               >
                 Bolsas: {item.bags}
               </Text>
-              <TouchableOpacity>
-                <Text style={{marginTop: 10, fontSize: 20, fontWeight: "700", color: "black"}}>Ver Más</Text>
-              </TouchableOpacity>
             </View>
           </View>
         )}

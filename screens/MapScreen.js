@@ -1,8 +1,9 @@
 import * as React from "react";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { StyleSheet, View, Dimensions } from "react-native";
 import { data } from "../constants/data";
 import { COLORS } from "../constants";
+import { StatusBar } from "expo-status-bar";
 
 const MapScreen = () => {
 
@@ -25,14 +26,14 @@ const MapScreen = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar/>
       <MapView
         ref={mapView}
-        style={{ flex: 1 }}
-        provider={PROVIDER_GOOGLE}
+        style={styles.map}
         initialRegion={initialRegion}
         mapPadding={edgePadding}
-        userInterfaceStyle="dark"
         loadingEnabled={true}
+        loadingIndicatorColor={COLORS.primary}
         
       >
         <Marker coordinate={initialRegion}/>
@@ -58,5 +59,6 @@ const styles = StyleSheet.create({
   map: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
+    flex: 1
   },
 });
