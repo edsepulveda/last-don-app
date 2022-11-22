@@ -21,20 +21,22 @@ const ResetPasswordScreen = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
 
+  const [modal, setModal] = useState(false)
+
   
   const handleResetPassword = () => {
     sendPasswordResetEmail(auth, email)
       .then(() => {
         Alert.alert(
           "Enviado",
-          "Correo enviado, verifique su bandeja de entrada"
+          "Correo enviado, verifique su bandeja de entrada o SPAM"
         )
         navigation.goBack()
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log({ errorCode, errorMessage });
+        Alert.alert(errorMessage)
       });
   };
 

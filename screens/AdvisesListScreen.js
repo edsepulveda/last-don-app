@@ -56,10 +56,7 @@ const AdvisesListScreen = () => {
               padding: 20,
               marginBottom: 20,
               backgroundColor: 'rgba(255,255,255,0.8)',
-              borderRadius: 25,
-              shadowColor: "#000",
-              elevation: 100,
-              
+              borderRadius: 45,            
             }}
           >
             <Image source={{uri: IMG}} style={{width: 70, height: 70, borderRadius: 80, marginRight: 20}}/>
